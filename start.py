@@ -64,7 +64,7 @@ try:
         
         # My Drawings
         logging.info("Begin")
-        weatherJson = utils.getWeather(config["weather_key"], "3")
+        weatherJson = utils.getWeather(weather_key, "3")
 
         blackImg = getBlack(weatherJson)
         redImg = getRed(weatherJson)
