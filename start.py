@@ -6,6 +6,9 @@ from PIL import Image,ImageDraw,ImageFont
 import traceback
 import requests
 
+from waveshare_epd import epd7in5b_HD
+
+
 from layout import getBlack,getRed
 import utils
 from config import Ink_HEIGHT,Ink_WIDTH
