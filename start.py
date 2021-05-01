@@ -8,7 +8,7 @@ import requests
 
 from layout import getBlack,getRed
 import utils
-from config import config,Ink_HEIGHT,Ink_WIDTH
+from config import Ink_HEIGHT,Ink_WIDTH
 
 picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pic')
 libdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
@@ -19,6 +19,7 @@ load_dotenv()
 
 weather_key = os.getenv('WEATHER_KEY')
 news_key = os.getenv('NEWS_KEY')
+mac = os.getenv("MAC")
 
 
 logging.basicConfig(filename=logFile,
@@ -42,15 +43,14 @@ try:
     logging.info("Start E-Ink-Calendar")
     utils.makeImgDirIfNotExists()
 
-    if config["mac"] == True:
+    if bool(mac):
         logging.info("NOT running on Raspberry Pi")
 
         (redImg, blackImg) = getImages()
         blackImg.save(os.path.join(imgdir, "black.png"))
         redImg.save(os.path.join(imgdir, "red.png"))
 
-
-    if config["mac"] == False:
+    else:
         logging.info("Running on Raspberry Pi")
 
         epd = epd5in83bc.EPD()

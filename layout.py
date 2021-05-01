@@ -4,7 +4,7 @@ import os
 import textwrap
 import logging
 
-from config import config,Ink_HEIGHT,Ink_WIDTH,main_Weather_Icon,small_Weather_Icon
+from config import Ink_HEIGHT,Ink_WIDTH,main_Weather_Icon,small_Weather_Icon
 
 picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pic')
 font16 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 16)
