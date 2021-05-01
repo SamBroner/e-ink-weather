@@ -6,9 +6,6 @@ from PIL import Image,ImageDraw,ImageFont
 import traceback
 import requests
 
-from waveshare_epd import epd7in5b_HD
-
-
 from layout import getBlack,getRed
 import utils
 from config import Ink_HEIGHT,Ink_WIDTH
@@ -55,6 +52,8 @@ try:
 
     else:
         logging.info("Running on Raspberry Pi")
+        from waveshare_epd import epd7in5b_HD
+
 
         epd = epd7in5b_HD.EPD()
         logging.info("init and Clear")
