@@ -1,6 +1,6 @@
-from waveshare_epd import epd5in83bc
+from waveshare_epd import epd7in5b_HD
 
-epd = epd5in83bc.EPD()
+epd = epd7in5b_HD.EPD()
 epd.init()
 epd.Clear()
 epd.sleep()

@@ -53,7 +53,7 @@ try:
     else:
         logging.info("Running on Raspberry Pi")
 
-        epd = epd5in83bc.EPD()
+        epd = epd7in5b_HD.EPD()
         logging.info("init and Clear")
         epd.init()
         # epd.Clear()
@@ -80,7 +80,7 @@ except IOError as e:
     
 except KeyboardInterrupt:    
     logging.info("ctrl + c:")
-    epd5in83bc.epdconfig.module_exit()
+    epd7in5b_HD.epdconfig.module_exit()
     exit()
 
 except:
