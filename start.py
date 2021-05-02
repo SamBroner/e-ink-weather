@@ -30,9 +30,10 @@ logging.basicConfig(filename=logFile,
 def getImages():
     weatherJson = utils.getWeather(weather_key, "3")
     logging.info("Weather JSON Received")
+    headlinesJson = utils.getHeadlines(news_key)
     
     redImg = getRed(weatherJson)
-    blackImg = getBlack(weatherJson)
+    blackImg = getBlack(weatherJson, headlinesJson)
     logging.info("Black Image Created")
 
     return (redImg, blackImg)
@@ -54,11 +55,9 @@ try:
         logging.info("Running on Raspberry Pi")
         from waveshare_epd import epd7in5b_HD
 
-
         epd = epd7in5b_HD.EPD()
         logging.info("init and Clear")
         epd.init()
-        # epd.Clear()
         time.sleep(1)
         
         # My Drawings

@@ -13,10 +13,10 @@ font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
 font36 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 36)
 font42 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 42)
 
-def getBlack(weatherJson):
+def getBlack(weatherJson, headlinesJson):
     blackImg = generateImgOutline()
     currentWeatherIcon = utils.getWeatherIcon(weatherJson["current"], main_Weather_Icon)
-    blackImg = generateBlackText(blackImg, weatherJson["current"])
+    blackImg = generateBlackText(blackImg, weatherJson["current"], headlinesJson)
 
     leftStart = round((Ink_WIDTH*2/3)/2 - main_Weather_Icon/2) # properly align the logo
     blackImg.paste(currentWeatherIcon, (leftStart, 100), currentWeatherIcon)
@@ -83,7 +83,7 @@ def generateImgOutline():
     return blackImg
 
 # todo: fix this mess
-def generateBlackText(blackImg, weatherReportJson):
+def generateBlackText(blackImg, weatherReportJson, headlines):
     logging.info("GenerateBlackText")
     drawBlackImg = ImageDraw.Draw(blackImg)
     drawBlackImg.text((10, 15), 'Hi, it\'s ', font = font24, fill = 0)
@@ -92,7 +92,6 @@ def generateBlackText(blackImg, weatherReportJson):
     drawBlackImg.text((10, 60), '... ', font = font24, fill = 0)
 
     logging.info("Create Headlines")
-    headlines = utils.getHeadlines()
 
     lines = []
     i = 0
