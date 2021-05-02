@@ -10,6 +10,8 @@ picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pic')
 font16 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 16)
 font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
 font36 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 36)
+font42 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 42)
+
 
 todayXStart = 20
 tmrwXStart = todayXStart + small_Weather_Icon + 40

@@ -15,6 +15,11 @@
 
 Rename ```.env.template``` to ```.env```
 
+**Remove** the debug flag from .env to trigger the e-ink display.
+
+## TODO
+
+Clean up log file
 
 ## Notes
 

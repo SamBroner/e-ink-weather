@@ -19,7 +19,7 @@ load_dotenv()
 
 weather_key = os.getenv('WEATHER_KEY')
 news_key = os.getenv('NEWS_KEY')
-mac = os.getenv("MAC")
+debug = os.getenv("DEBUG")
 
 
 logging.basicConfig(filename=logFile,
@@ -33,7 +33,6 @@ def getImages():
     logging.info("Weather JSON Received")
     
     redImg = getRed(weatherJson)
-
     blackImg = getBlack(weatherJson)
     logging.info("Black Image Created")
 
@@ -43,12 +42,14 @@ try:
     logging.info("Start E-Ink-Calendar")
     utils.makeImgDirIfNotExists()
 
-    if bool(mac):
-        logging.info("NOT running on Raspberry Pi")
+    if bool(debug):
+        logging.info("Running in DEBUG mode. Remove DEBUG from .env to run e-ink")
 
         (redImg, blackImg) = getImages()
         blackImg.save(os.path.join(imgdir, "black.png"))
         redImg.save(os.path.join(imgdir, "red.png"))
+        blackImg.paste(redImg, (0, 0), blackImg)
+        blackImg.save(os.path.join(imgdir, "full.png"))
 
     else:
         logging.info("Running on Raspberry Pi")
