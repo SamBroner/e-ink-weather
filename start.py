@@ -21,7 +21,6 @@ weather_key = os.getenv('WEATHER_KEY')
 news_key = os.getenv('NEWS_KEY')
 debug = os.getenv("DEBUG")
 
-
 logging.basicConfig(filename=logFile,
                             filemode='a',
                             format='%(asctime)s,%(msecs)d %(module)s... %(message)s',

@@ -4,18 +4,14 @@ import os
 import textwrap
 import logging
 
-from config import Ink_HEIGHT,Ink_WIDTH,main_Weather_Icon,small_Weather_Icon
+from config import Ink_HEIGHT,Ink_WIDTH,main_Weather_Icon,small_Weather_Icon, today_x_start, tmrw_x_start, omrw_x_start
 
 picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pic')
 font16 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 16)
+font20 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 20)
 font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
 font36 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 36)
 font42 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 42)
-
-
-todayXStart = 20
-tmrwXStart = todayXStart + small_Weather_Icon + 40
-day3XStart = tmrwXStart + small_Weather_Icon + 40
 
 def getBlack(weatherJson):
     blackImg = generateImgOutline()
@@ -33,14 +29,14 @@ def getRed(weatherJson):
 
     redImg = generateCurrentWeatherText(redImg, weatherJson["current"])
 
-    todaysWeather = utils.getWeatherIcon(weatherJson["forecast"]["forecastday"][0]["day"], 100)
-    redImg.paste(todaysWeather, (todayXStart, round(Ink_HEIGHT * 2 / 3 + 5)), todaysWeather)
+    todaysWeather = utils.getWeatherIcon(weatherJson["forecast"]["forecastday"][0]["day"], small_Weather_Icon)
+    redImg.paste(todaysWeather, (today_x_start, round(Ink_HEIGHT * 2 / 3 + 5)), todaysWeather)
 
-    tmrwsWeather = utils.getWeatherIcon(weatherJson["forecast"]["forecastday"][1]["day"], 100)
-    redImg.paste(tmrwsWeather, (tmrwXStart, round(Ink_HEIGHT * 2 / 3 + 5)), tmrwsWeather)
+    tmrwsWeather = utils.getWeatherIcon(weatherJson["forecast"]["forecastday"][1]["day"], small_Weather_Icon)
+    redImg.paste(tmrwsWeather, (tmrw_x_start, round(Ink_HEIGHT * 2 / 3 + 5)), tmrwsWeather)
 
-    skipDayWeathers = utils.getWeatherIcon(weatherJson["forecast"]["forecastday"][2]["day"], 100)
-    redImg.paste(skipDayWeathers, (day3XStart, round(Ink_HEIGHT * 2 / 3 + 5)), skipDayWeathers)
+    skipDayWeathers = utils.getWeatherIcon(weatherJson["forecast"]["forecastday"][2]["day"], small_Weather_Icon)
+    redImg.paste(skipDayWeathers, (omrw_x_start, round(Ink_HEIGHT * 2 / 3 + 5)), skipDayWeathers)
     return redImg
 
 
@@ -55,14 +51,14 @@ def generateForecastWeatherText(img, weatherJson):
     day3Low = round(weatherJson["forecast"]["forecastday"][2]["day"]["mintemp_f"])
 
     drawImg = ImageDraw.Draw(img)
-    drawImg.text((todayXStart, round(Ink_HEIGHT * 2 / 3 + 105)), "{}˚- {}˚".format(todayHigh, todayLow), font = font16, fill = 0)
-    drawImg.text((todayXStart, round(Ink_HEIGHT * 2 / 3 + 128)), "Today".format(todayHigh, todayLow), font = font16, fill = 0)
+    drawImg.text((today_x_start + 13, round(Ink_HEIGHT * 2 / 3 + small_Weather_Icon + 5)), "{}˚- {}˚".format(todayHigh, todayLow), font = font20, fill = 0)
+    drawImg.text((today_x_start + 19, round(Ink_HEIGHT * 2 / 3 + small_Weather_Icon + 28)), "Today".format(todayHigh, todayLow), font = font20, fill = 0)
 
-    drawImg.text((tmrwXStart, round(Ink_HEIGHT * 2 / 3 + 105)), "{}˚- {}˚".format(tmrwHigh, tmrwLow), font = font16, fill = 0)
-    drawImg.text((tmrwXStart - 12, round(Ink_HEIGHT * 2 / 3 + 128)), "Tomorrow".format(tmrwHigh, tmrwLow), font = font16, fill = 0)
+    drawImg.text((tmrw_x_start + 13, round(Ink_HEIGHT * 2 / 3 + small_Weather_Icon + 5)), "{}˚- {}˚".format(tmrwHigh, tmrwLow), font = font20, fill = 0)
+    drawImg.text((tmrw_x_start + 2, round(Ink_HEIGHT * 2 / 3 + small_Weather_Icon + 28)), "Tomorrow".format(tmrwHigh, tmrwLow), font = font20, fill = 0)
 
-    drawImg.text((day3XStart, round(Ink_HEIGHT * 2 / 3 + 105)), "{}˚- {}˚".format(day3High, day3Low), font = font16, fill = 0)
-    drawImg.text((day3XStart - 18, round(Ink_HEIGHT * 2 / 3 + 128)), "Overmorrow".format(day3High, day3Low), font = font16, fill = 0)
+    drawImg.text((omrw_x_start + 13, round(Ink_HEIGHT * 2 / 3 + small_Weather_Icon + 5)), "{}˚- {}˚".format(day3High, day3Low), font = font20, fill = 0)
+    drawImg.text((omrw_x_start - 6, round(Ink_HEIGHT * 2 / 3 + small_Weather_Icon + 28)), "Overmorrow".format(day3High, day3Low), font = font20, fill = 0)
 
     return img
 
@@ -100,11 +96,11 @@ def generateBlackText(blackImg, weatherReportJson):
 
     lines = []
     i = 0
-    while len(lines) < 19 and i != -1:
-        newlines = (textwrap.wrap("#  " + headlines[i]["title"], width=25))
-        if len(lines) + len(newlines) < 19:
+    while len(lines) < 22 and i != -1:
+        newlines = (textwrap.wrap("#  " + headlines[i]["title"], width=29))
+        if len(lines) + len(newlines) < 22:
             lines  = lines + newlines
-            lines = lines + ["\n"]
+            lines = lines + [" "]
             i += 1
         else:
             i = -1
@@ -115,7 +111,7 @@ def generateBlackText(blackImg, weatherReportJson):
 
     drawBlackImg.text(((round(Ink_WIDTH*2/3) + 40), 5), "Headlines", fill=0, font=font24)
 
-    drawBlackImg.multiline_text(((round(Ink_WIDTH*2/3) + 5), 40), text, fill=0, font=font16)
+    drawBlackImg.multiline_text(((round(Ink_WIDTH*2/3) + 5), 40), text, fill=0, font=font20)
 
     logging.info("Black Text Finished")
 
